@@ -22,14 +22,9 @@ const UploadModal = () => {
   const [uploadType, setUploadType] = useState<number>(0)
   const uploadModal = useUploadModal()
 
-  
   const supabase = createClient()
-  const { user } = useUser()
+  const { user, userDetails } = useUser()
   const { parentId } = useUserFS()
-
-  if (!user) {
-    uploadModal.onClose()
-  }
 
   const {
     register, 
@@ -42,7 +37,7 @@ const UploadModal = () => {
       parent_id: parentId, 
       target_id: null, 
       name: null, 
-      owner_id: '', 
+      owner_id: userDetails!.id, 
       file_type: '', 
       file: null,
       detail: null, 
@@ -63,17 +58,17 @@ const UploadModal = () => {
       const storageFile = values.file?.[0]
 
       if (
-        (values.type == 0 || !values.name || !values.owner_id || !storageFile || !user) || 
-        (values.type == 1 || !values.name || !values.detail || !values.owner_id || !storageFile || !user)
+        (values.type == 0 && (!values.name || !values.owner_id || !storageFile || !user)) || 
+        (values.type == 1 && (!values.name || !values.detail || !values.owner_id || !storageFile || !user))
       ) {
-        toast.error('Missing fields')
+        toast.error(`Missing fields ${storageFile}`)
         return
       }
 
       const uniqueID = uniqid()
 
-      const storageArray = ['audio', 'image']
-      const fileTypeArray = ['audio', '']
+      const storageArray = ['image', 'audio']
+      const fileTypeArray = ['', 'audio']
       
       // Upload storageFile
       const {
@@ -89,7 +84,7 @@ const UploadModal = () => {
 
       if (fileError) {
         setIsLoading(false)
-        return toast.error(`failed ${storageArray[values.type]} upload.`)
+        return toast.error(`Failed ${storageArray[values.type]} upload. ${fileError.message}`)
       }
 
       // Create a record in database
@@ -101,12 +96,12 @@ const UploadModal = () => {
           type: values.type,
           target_id: values.target_id,
           name: values.name,
-          owner_id: user.id,
+          owner_id: values.owner_id,
           file_type: fileTypeArray[values.type],
           path: fileData.path,
-          detail: {
+          detail: values.detail ? {
             author: values.detail, 
-          },
+          } : null,
         })
 
       if (supabaseError) {
@@ -116,14 +111,9 @@ const UploadModal = () => {
 
       router.refresh()
       setIsLoading(false)
-      toast.success('Song created!')
+      toast.success('File created!')
       reset()
       uploadModal.onClose()
-
-      if (fileError) {
-        setIsLoading(false)
-        return toast.error('failed file upload.')
-      }
 
     } catch (error) {
       console.error("Error details: ", error)
@@ -144,6 +134,7 @@ const UploadModal = () => {
       <div className="flex flex-col space-y-3">
         <div className="flex flex-row space-x-1.5">
           <Button
+            disabled={isLoading}
             onClick={() => { 
               setUploadType(1)
               setValue('type', 1)
@@ -152,6 +143,7 @@ const UploadModal = () => {
             upload audio
           </Button>
           <Button
+            disabled={isLoading}
             onClick={() => { 
               setUploadType(0)
               setValue('type', 0)
@@ -222,7 +214,6 @@ const UploadModal = () => {
               Create 
             </Button>
           </form> )
-
         }
       </div>
     </Modal>

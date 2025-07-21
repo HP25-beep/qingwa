@@ -14,12 +14,12 @@ const MainWindow: React.FC<MainWindowProps> = ({
 
   return (
     <MainWindowWrapper>
-      {/* <div className="hidden md:flex flex-col gap-y-2 bg-black h-full w-[280px] p-2">
+      <div className="hidden md:flex flex-col gap-y-2 bg-black h-full w-[280px] p-2">
         <Box 
           className="overflow-y-auto h-full">
           <Library/>
         </Box>  
-      </div> */}
+      </div>
 
       <main className="h-full flex-1 overflow-y-auto py-2">
         {children}

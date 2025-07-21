@@ -45,7 +45,7 @@ export default async function RootLayout({
       >
         <ToasterProvider />
         <UserProvider>
-          {/* <ModalProvider /> */}
+          <ModalProvider />
 
           <Navbar />
 

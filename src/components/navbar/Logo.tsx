@@ -7,7 +7,7 @@ const Logo: React.FC = () => {
         className="
           w-6 
           h-px 
-          bg-pink-300
+          bg-pink-200
           mr-2 
           group-hover:w-8 
           transition-all 

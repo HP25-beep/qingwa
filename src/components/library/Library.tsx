@@ -66,7 +66,7 @@ const Library: React.FC<LibraryProps> = ({
 
   const [isEditing, setIsEditing] = useState(false)
   
-  const onClick = () => {    
+  const onClick = () => {
     return uploadModal.onOpen()
   };
 
