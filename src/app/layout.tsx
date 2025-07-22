@@ -9,6 +9,7 @@ import Player from "@/components/audio_player/Player";
 import UserProvider from "@/providers/UserProvider";
 import ModalProvider from "@/providers/ModalProvider";
 import ToasterProvider from "@/providers/ToasterProvider";
+import UserFSProvider from "@/providers/UserFSProvider";
 
 // import getSongsByUserId from "@/actions/getSongsByUserId";
 
@@ -45,16 +46,16 @@ export default async function RootLayout({
       >
         <ToasterProvider />
         <UserProvider>
-          <ModalProvider />
+          <UserFSProvider>
+            <ModalProvider />
 
-          <Navbar />
+            <Navbar />
+            <MainWindow>
+              {children}
+            </MainWindow>
+            {/* <Player /> */}
 
-          <MainWindow>
-            {children}
-          </MainWindow>
-          
-          {/* <Player /> */}
-
+          </UserFSProvider>
         </UserProvider>
       </body>
     </html>

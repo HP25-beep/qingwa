@@ -2,14 +2,14 @@
 
 import uniqid from "uniqid"
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import { useRouter } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
 
 import useUploadModal from "@/hooks/useUploadModal"
 import { useUser } from "@/hooks/useUser"
-import useUserFS from "@/hooks/useUserFS"
+import { useUserFS } from "@/hooks/useUserFS"
 
 import Modal from "./Modal"
 import Input from "./Input"
@@ -17,14 +17,14 @@ import Button from "./Button"
 
 const UploadModal = () => {
   const router = useRouter()
+  const { nodePath } = useUserFS()
+  const { user, userDetails } = useUser()
+  const supabase = createClient()
 
   const [isLoading, setIsLoading] = useState(false)
-  const [uploadType, setUploadType] = useState<number>(0)
+  const [uploadType, setUploadType] = useState<number>(1)
   const uploadModal = useUploadModal()
-
-  const supabase = createClient()
-  const { user, userDetails } = useUser()
-  const { parentId } = useUserFS()
+  const fileOutputArray = ['folder', 'audio']
 
   const {
     register, 
@@ -34,15 +34,23 @@ const UploadModal = () => {
   } = useForm<FieldValues>({
     defaultValues: {
       type: null, 
-      parent_id: parentId, 
+      parent_id: nodePath[nodePath.length-1]?.id ?? null, 
       target_id: null, 
       name: null, 
-      owner_id: userDetails!.id, 
+      owner_id: userDetails?.id ?? null, 
       file_type: '', 
       file: null,
       detail: null, 
     }
   })
+
+  useEffect(() => {
+    setValue('parent_id', nodePath[nodePath.length-1]?.id ?? null)
+  }, [nodePath])
+
+  useEffect(() => {
+    setValue('owner_id', userDetails?.id)
+  }, [userDetails])
 
   const onChange = (open: boolean) => {
     if (!open) {
@@ -52,39 +60,48 @@ const UploadModal = () => {
   }
 
   const onSubmit: SubmitHandler<FieldValues> = async (values) => {
+
     try {
       setIsLoading(true)
+
+      values.parent_id = nodePath[nodePath.length-1]?.id ?? null
+      values.owner_id = userDetails!.id
+      values.type = uploadType
 
       const storageFile = values.file?.[0]
 
       if (
-        (values.type == 0 && (!values.name || !values.owner_id || !storageFile || !user)) || 
-        (values.type == 1 && (!values.name || !values.detail || !values.owner_id || !storageFile || !user))
+        (values.type == 0 && (!values.owner_id || !values.name || !storageFile || !user)) || 
+        (values.type == 1 && (!values.owner_id || !values.name || !values.detail || !storageFile || !user))
       ) {
-        toast.error(`Missing fields ${storageFile}`)
+        toast.error(`Missing fields ${values.owner_id}`)
         return
       }
 
       const uniqueID = uniqid()
 
       const storageArray = ['image', 'audio']
-      const fileTypeArray = ['', 'audio']
       
       // Upload storageFile
+      const originalName = storageFile.name
+      const extension = originalName.split('.').pop()
+      const fileNameWithExt = `${storageArray[values.type]}-${uniqueID}.${extension}`
+
       const {
         data: fileData,
         error: fileError,
       } = await supabase
         .storage
         .from(storageArray[values.type])
-        .upload(`${storageArray[values.type]}-${uniqueID}`, storageFile, {
+        .upload(fileNameWithExt, 
+          storageFile, {
           cacheControl: '3600',
           upsert: false }
         )
 
       if (fileError) {
         setIsLoading(false)
-        return toast.error(`Failed ${storageArray[values.type]} upload. ${fileError.message}`)
+        return toast.error(`Failed ${storageArray[values.type]} upload.`)
       }
 
       // Create a record in database
@@ -94,10 +111,11 @@ const UploadModal = () => {
         .from('fs')
         .insert({
           type: values.type,
+          parent_id: values.parent_id,
           target_id: values.target_id,
           name: values.name,
           owner_id: values.owner_id,
-          file_type: fileTypeArray[values.type],
+          file_type: storageFile.type,
           path: fileData.path,
           detail: values.detail ? {
             author: values.detail, 
@@ -126,7 +144,11 @@ const UploadModal = () => {
   return (
     <Modal
       title="Add an file"
-      description="Upload audio/folder"
+      description={`
+        User ${userDetails?.full_name ?? "Username"} 
+        upload ${fileOutputArray[uploadType]}
+         to folder ${nodePath[nodePath.length-1]?.name ?? "root"}
+      `}
       isOpen={uploadModal.isOpen}
       onChange={onChange}
     >
@@ -137,6 +159,7 @@ const UploadModal = () => {
             disabled={isLoading}
             onClick={() => { 
               setUploadType(1)
+              reset()
               setValue('type', 1)
             }}
           >
@@ -146,6 +169,7 @@ const UploadModal = () => {
             disabled={isLoading}
             onClick={() => { 
               setUploadType(0)
+              reset()
               setValue('type', 0)
             }}
           >
@@ -182,7 +206,11 @@ const UploadModal = () => {
                 {...register('file', { required: true })}
               />
             </div>
-            <Button disabled={isLoading} type="submit" className="text-black h-[40px]">
+            <Button 
+              disabled={isLoading} 
+              type="submit" 
+              className="text-black h-[40px]"
+            >
               Create 
             </Button>
           </form> )
@@ -210,7 +238,11 @@ const UploadModal = () => {
                 {...register('file', { required: true })}
               />
             </div>
-            <Button disabled={isLoading} type="submit" className="text-black h-[40px]">
+            <Button 
+              disabled={isLoading} 
+              type="submit" 
+              className="text-black h-[40px]"
+            >
               Create 
             </Button>
           </form> )

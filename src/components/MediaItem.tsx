@@ -1,15 +1,17 @@
 "use client"
 
 import Image from "next/image";
+import { twMerge } from "tailwind-merge";
+import { BiMusic } from "react-icons/bi";
+
+import { FileNode } from "@/types"
 
 import useLoadImage from "@/hooks/useLoadImage";
-import { Song } from "@/types"
 import usePlayer from "@/hooks/usePlayer";
-import { twMerge } from "tailwind-merge";
 
 interface MediaItemProps {
-    data: Song;
-    onClick?: (id: string) => void;
+    data: FileNode;
+    onClick?: (data: FileNode) => void;
     className?: string
 }
 
@@ -18,15 +20,23 @@ const MediaItem: React.FC<MediaItemProps> = ({
   onClick, 
   className
 }) => {
-  const player = usePlayer();
-  const imageUrl = useLoadImage(data);
+
+  // const player = usePlayer();
+
+  function isObject(obj: any): obj is Record<string, any> {
+    return obj !== null && typeof obj === 'object' && !Array.isArray(obj);
+  }
+
+  function hasAuthor(obj: any): obj is { author: string } {
+    return isObject(obj) && !Array.isArray(obj.author) && typeof obj.author === 'string';
+  }
   
   const handleClick = () => {
     if (onClick) {
-      return onClick(data.id);
+      return onClick(data);
     }
-
-    return player.setId(data.id);
+    return
+    // return player.setId(data.id);
   }
 
   return (
@@ -47,19 +57,23 @@ const MediaItem: React.FC<MediaItemProps> = ({
     >
       <div
         className="
+          flex
           relative
           rounded-md
           min-h-[48px]
           min-w-[48]
+          items-center
+          justify-center
           overflow-hidden
+          hover:bg-neutral-700/30
         "
       >
-        <Image
-          fill
-          src={imageUrl || '/images/liked.png'}
-          alt="Media Item"
-          className="object-cover"
-        /> 
+        <BiMusic 
+          className="
+            text-neutral-400
+          "
+          size={26}
+        />
       </div>
       <div 
         className="
@@ -70,10 +84,10 @@ const MediaItem: React.FC<MediaItemProps> = ({
         "
       >
         <p className="text-white truncate">
-          {data.title}
+          {data.name}
         </p>
         <p className="text-neutral-400 text-sm truncate">
-          {data.author}
+          {hasAuthor(data.detail) ? data.detail.author : ""}
         </p>
       </div>  
     </div>

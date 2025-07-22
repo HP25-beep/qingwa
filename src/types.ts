@@ -4,8 +4,16 @@ export interface Song {
   author: string;
   title: string;
   song_path: string;
-  image_path: string;
+  image_path?: string;
 }
+
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json }
+  | Json[];
 
 export interface FileNode {
   id: number
@@ -17,7 +25,7 @@ export interface FileNode {
   owner_id: string
   file_type: string
   path: string
-  detail: any
+  detail: Json
 }
 
 export interface UserDetails {

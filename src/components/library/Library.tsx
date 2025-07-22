@@ -1,72 +1,102 @@
 "use client";
 
 import { BiMinus, BiPlus, BiSolidPlaylist, BiUpArrowAlt } from "react-icons/bi";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import toast from "react-hot-toast";
 
 import useUploadModal from "@/hooks/useUploadModal";
 import { useUser } from "@/hooks/useUser";
-import useUserFS from "@/hooks/useUserFS";
-import useOnPlay from "@/hooks/useOnPlay";
+import { useUserFS } from "@/hooks/useUserFS";
+// import useOnPlay from "@/hooks/useOnPlay";
 
 import { FileNode } from "@/types";
 
 import FileBlock from "./FileBlock";
 import Box from "../Box";
-import getSongsByUserId from "@/actions/getNodesByUserId";
+// import getSongsByUserId from "@/actions/getNodesByUserId";
 import { createClient } from "@/lib/supabase/client";
 
-interface LibraryProps {
-}
-
-const Library: React.FC<LibraryProps> = ({
-}) => {
+const Library = () => {
   const uploadModal = useUploadModal()
   const { user } = useUser()
-  const supabase = createClient()
-  const { parentId: currentParentId, updateParentId } = useUserFS()
+  const { 
+    curChildNodes,
+    isEmptyPath,
+    pushPath,
+    popPath,
+    update
+  } = useUserFS()
   
   // const songs = await getSongsByUserId();
-  
   // const onPlay = useOnPlay(songs);
-  
-  const [stack, setStack] = useState<(number | null)[]>([null]) // 初始为 root (null)
-  const [nodes, setNodes] = useState<FileNode[]>([])
 
-  useEffect( () => {
-    updateParentId(stack[stack.length - 1]) // 当前查看的目录 ID
-  }, [stack])
-
-  // 读取当前目录下的文件和文件夹
-  useEffect(() => {
-    async function load() {
-      if (user) {
-        setNodes([])
-        return
-      }
-      // const res = await fetch(`/api/files?parent_id=${currentParentId ?? ''}`)
-      const res = await fetch(`/api/files${currentParentId ? `?parent_id=${currentParentId}` : ''}`)
-      const data = await res.json()
-      setNodes(data)
-    }
-
-    load()
-  }, [currentParentId])
-
-  // 进入子目录
-  const enter = (folderId: number) => {
-    setStack(prev => [...prev, folderId])
-  }
+  const [isEditing, setIsEditing] = useState(false)
 
   // 返回上一级
   const back = () => {
-    if (stack.length > 1) {
-      setStack(prev => prev.slice(0, -1))
+    if (!isEmptyPath()) {
+      popPath()
     }
   }
 
-  const [isEditing, setIsEditing] = useState(false)
-  
-  const onClick = () => {
+  // 进入子目录
+  const enterFoler = (data: FileNode) => {
+    pushPath(data)
+  }
+
+  // 进入文件
+  const enterFile = () => {
+
+  }
+
+  // 删除子目录
+  const deleteFolder = async (id: number, path: string, type: number) => {
+    try {
+      const res = await fetch(
+        `api/files/${id}/${path}/${type}/delete-recursive`, {
+        method: 'DELETE',
+      })
+      const result = await res.json()
+      if (!res.ok) {
+        throw new Error('fail to analyse response')
+      }
+      const error = result.error
+      if (error) {
+        toast.error("Fail to delete file")
+      }
+      toast.success("Delete successfully")
+    } catch {
+      toast.error("fail to delete file")
+    } finally {
+      update()
+    }
+  }
+
+  // 删除文件
+  const deleteFile = async (id: number, path: string, type: number) => {
+    try {
+      const res = await fetch(
+        `api/files/${id}/${path}/${type}/delete-recursive`, {
+        method: 'DELETE',
+      })
+      const result = await res.json()
+      if (!res.ok) {
+        throw new Error('fail to analyse response')
+      }
+      const error = result.error
+      if (error) {
+        toast.error("Fail to delete file")
+      }
+      toast.success("Delete successfully")
+    } catch {
+      toast.error("fail to delete file")
+    } finally {
+      update()
+    }
+  }
+
+  // 打开上传文件模块
+  const onUpload = () => {
     return uploadModal.onOpen()
   };
 
@@ -103,7 +133,7 @@ const Library: React.FC<LibraryProps> = ({
           <div className="grid grid-cols-3 space-x-1">
           
           <BiUpArrowAlt 
-            onClick={currentParentId ? back : (() => {})}
+            onClick={!isEmptyPath() ? back : (() => {})}
             size={20}
             className="
               text-neutral-400
@@ -125,7 +155,7 @@ const Library: React.FC<LibraryProps> = ({
           />
 
           <BiPlus 
-            onClick={onClick}
+            onClick={onUpload}
             size={20}
             className="
               text-neutral-400
@@ -144,15 +174,20 @@ const Library: React.FC<LibraryProps> = ({
             mt-4
             px-3
         ">
-          Library
-          {/* {songs.map((item) => (
-            <FileBlock 
-              key={item.id}
-              data={item}
-              onEditing={isEditing}
-              onOpen={onPlay}
-            />
-          ))} */}
+          {curChildNodes.map((item) => { return (
+              <FileBlock 
+                key={item.id}
+                data={item}
+                onEditing={isEditing}
+                handler={{
+                  onOpenFolder: enterFoler, 
+                  onOpenFile: enterFile, 
+                  onDeleteFolder: deleteFolder,
+                  onDeleteFile: deleteFile,
+                }}
+              />
+            )}
+          )}
         </div>
       </div>
     )
