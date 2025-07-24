@@ -1,19 +1,22 @@
 "use client";
 
-import useGetSongById from "@/hooks/useGetSongById";
+// import useGetSongById from "@/hooks/useGetSongById";
 import usePlayer from "@/hooks/usePlayer";
 import useLoadSongUrl from "@/hooks/useLoadSongUrl";
 import PlayerContent from "./PlayerContent";
+import { getToplayAudio } from "@/actions/toplayAudioFunc";
+import { FileNode } from "@/types";
 
-const Player = () => {
-  const player = usePlayer();
-  const { song } = useGetSongById(player.activeId);
+const Player = async () => {
+  const player = usePlayer()
 
-  const songUrl = useLoadSongUrl(song!);
+  const audio = await getToplayAudio(player.activeId)
 
-  if (!song || !songUrl || !player.activeId) {
-    return null;
-  }
+  const songUrl = await useLoadSongUrl(audio!)
+  
+  // const { song } = useGetSongById(player.activeId);
+
+
 
   return (
     <div
@@ -29,8 +32,8 @@ const Player = () => {
     >
       <PlayerContent 
         key={songUrl}
-        song={song}
-        songUrl={songUrl}
+        song={audio!}
+        songUrl={songUrl!}
       />
     </div>
   )

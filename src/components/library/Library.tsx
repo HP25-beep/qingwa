@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import useUploadModal from "@/hooks/useUploadModal";
 import { useUser } from "@/hooks/useUser";
 import { useUserFS } from "@/hooks/useUserFS";
+import usePlayer from "@/hooks/usePlayer";
 // import useOnPlay from "@/hooks/useOnPlay";
 
 import { FileNode } from "@/types";
@@ -15,10 +16,12 @@ import FileBlock from "./FileBlock";
 import Box from "../Box";
 // import getSongsByUserId from "@/actions/getNodesByUserId";
 import { createClient } from "@/lib/supabase/client";
+import { addToplayAudio } from "@/actions/toplayAudioFunc";
 
 const Library = () => {
-  const uploadModal = useUploadModal()
   const { user } = useUser()
+  const uploadModal = useUploadModal()
+  const player = usePlayer()
   const { 
     curChildNodes,
     isEmptyPath,
@@ -45,8 +48,20 @@ const Library = () => {
   }
 
   // 进入文件
-  const enterFile = () => {
+  const enterFile = (data: FileNode) => {
+    const curId = player.ids.findIndex((id) => id === data.id)
+    if (curId) {
+      player.setId(curId)
+    } else {
+      let curAudio: FileNode[] = []
+      curChildNodes.forEach((node) => {if (node.type === 1) {
+        curAudio.push(node)
+      }})
 
+      curAudio.forEach((node) => addToplayAudio(node))
+      player.setId(curId)
+      player.setIds(Array.from({length: curAudio.length}, (_, i) => curAudio[i].id))
+    }
   }
 
   // 删除子目录

@@ -87,7 +87,7 @@ const UserMenu = () => {
             items-center 
             rounded-full 
             bg-gradient-to-br 
-            from-emerald-800 
+            from-white
             to-pink-300 
             justify-center
           "

@@ -73,7 +73,6 @@ const FileBlock: React.FC<FileBlockProps> = ({
             setIsDeleting(true)
             onDeleteFile(data.id, data.path, data.type)
             setIsDeleting(false)
-            r
           }}
           className="
             flex

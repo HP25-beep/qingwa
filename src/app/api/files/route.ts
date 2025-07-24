@@ -6,6 +6,11 @@ export async function GET(req: NextRequest) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
+  if (!user) {
+    console.log("fail to load user")
+    return NextResponse.json({ null }, { status: 500 })
+  }
+
   const temp = req.nextUrl.searchParams.get('parent_id')
   const parentId: number | null = temp === null ? null : Number(temp)
 

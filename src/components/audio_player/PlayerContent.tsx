@@ -1,6 +1,6 @@
 "use client";
 
-import { Song } from "@/types";
+import { FileNode, Song } from "@/types";
 import { BsPauseFill, BsPlayFill } from "react-icons/bs";
 import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
 import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
@@ -13,7 +13,7 @@ import LikeButton from "../LikeButton";
 import Slider from "./Slider";
 
 interface PlayerContentProps {
-  song: Song;
+  song: FileNode;
   songUrl: string;
 }
 
@@ -21,6 +21,11 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
   song,
   songUrl
 }) => {
+  // usePlayer是一个前端的钩子，里面有一个播单的小数据库
+  // PlayerContent的大部分功能对这个小数据库的操作
+  // usePlayer的歌曲数据获取需要额外添加一个api，现在的前端读取方式是不够的
+
+  
   const player = usePlayer();
   const [volume, setVolume] = useState(1);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -106,7 +111,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
       >
         <div className="flex items-center gap-x-4">
           <MediaItem  data={song} />
-          <LikeButton songId={song.id} />
+          {/* <LikeButton songId={song.id} /> */}
         </div>
       </div>
 

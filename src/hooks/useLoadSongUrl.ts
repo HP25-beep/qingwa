@@ -1,17 +1,17 @@
-import { Song } from "@/types";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { FileNode } from "@/types";
+import { createClient } from "@/lib/supabase/server";
 
-const useLoadSongUrl = (song: Song) => {
-  const supabaseClient = useSupabaseClient();
+const useLoadSongUrl = async (song: FileNode) => {
+  const supabase = await createClient();
 
   if (!song) {
-    return '';
+    return null;
   }
 
-  const { data: songData } = supabaseClient
+  const { data: songData } = supabase
     .storage
-    .from('songs')
-    .getPublicUrl(song.song_path);
+    .from('audio')
+    .getPublicUrl(song.path);
 
   return songData.publicUrl;
 }

@@ -41,3 +41,22 @@ npm install server-only
 ## FileSystem
 
 0=普通文件夹，1=文件，2=软链接
+
+## Player
+Player 的基础是用户端数据库,使用 indexDB 存储媒体元数据
+
+数据的读入: 当按下按钮的时候将元数据存储到 indexDB 中, 
+当数据库更新时, 前端刷新播放列表
+
+数据的播放: 前端的播放列表存储音乐id, 当播放到某个id时, 
+从数据库读出音频, 根据path字段从数据库的storage里面拉取publicURL.
+
+一个 player 操纵组件, 一个 database 操纵组件, 
+
+usePlayer 用 zustand 管理 player 状态, 管理是否应该更新 playlist
+
+client-side database
+```
+npm install dexie
+npm install dexie-react-hooks
+```
