@@ -21,7 +21,7 @@ const MediaItem: React.FC<MediaItemProps> = ({
   className
 }) => {
 
-  // const player = usePlayer();
+  const player = usePlayer()
 
   function isObject(obj: any): obj is Record<string, any> {
     return obj !== null && typeof obj === 'object' && !Array.isArray(obj);
@@ -35,8 +35,7 @@ const MediaItem: React.FC<MediaItemProps> = ({
     if (onClick) {
       return onClick(data);
     }
-    return
-    // return player.setId(data.id);
+    return player.setId(data.id)
   }
 
   return (

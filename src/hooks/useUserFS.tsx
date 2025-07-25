@@ -21,7 +21,7 @@ export const UserFSContext = createContext<UserFSContextType | undefined>(undefi
 
 export const UserFSContextProvider = ({children}: {children: React.ReactNode}) => {
 
-  const user = useUser();
+  const { user } = useUser();
 
   const [nodePath, setNodePath] = useState<(FileNode | null)[]>([null])
   const [curChildNodes, setCurChildNodes] = useState<FileNode[]>([])

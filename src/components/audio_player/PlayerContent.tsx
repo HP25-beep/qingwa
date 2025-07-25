@@ -1,6 +1,6 @@
 "use client";
 
-import { Song } from "@/types";
+import { FileNode } from "@/types";
 import { BsPauseFill, BsPlayFill } from "react-icons/bs";
 import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
 import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
@@ -13,13 +13,13 @@ import LikeButton from "../LikeButton";
 import Slider from "./Slider";
 
 interface PlayerContentProps {
-  song: Song;
-  songUrl: string;
+  audio: FileNode;
+  audioUrl: string;
 }
 
 const PlayerContent: React.FC<PlayerContentProps> = ({
-  song,
-  songUrl
+  audio,
+  audioUrl
 }) => {
   const player = usePlayer();
   const [volume, setVolume] = useState(1);
@@ -59,7 +59,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
   };
 
   const [play, { pause, sound }] = useSound(
-    songUrl, 
+    audioUrl, 
     {
       volume: volume,
       onplay: () => setIsPlaying(true),
@@ -105,8 +105,8 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
         "
       >
         <div className="flex items-center gap-x-4">
-          <MediaItem  data={song} />
-          <LikeButton songId={song.id} />
+          <MediaItem  data={audio} />
+          {/* <LikeButton songId={audio.id} /> */}
         </div>
       </div>
 

@@ -19,7 +19,7 @@ const UserMenu = () => {
   const player = usePlayer();
   const router = useRouter();
 
-  const user = useUser();
+  const { user, userDetails } = useUser();
   
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuOpen2, setIsMenuOpen2] = useState(false);
@@ -95,7 +95,7 @@ const UserMenu = () => {
           <BiSolidUser size={16} />
         </div>
         <span className="text-sm font-medium hidden text-white md:block">
-          {user.userDetails?.full_name || "Username"}
+          {userDetails?.full_name || "Username"}
         </span>
       </Button>
       

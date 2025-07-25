@@ -53,7 +53,7 @@ export default async function RootLayout({
             <MainWindow>
               {children}
             </MainWindow>
-            {/* <Player /> */}
+            <Player />
 
           </UserFSProvider>
         </UserProvider>

@@ -24,7 +24,7 @@ export default async function Home() {
               font-semibold
             "
           >
-            Welcome back
+            欢迎回家
           </h1>
           {/* <div
             className="
@@ -49,7 +49,7 @@ export default async function Home() {
       <div className="mt-2 mb-7 px-6">
         <div className="flex justify-between items-center">
           <h1 className="text-white text-2xl font-semibold">
-            Some Words
+            聊聊一些话
           </h1>
         </div>
 
@@ -63,19 +63,19 @@ export default async function Home() {
           "
         >
           <p className="p-4 text-white text-md">
-            大家好, 主页还没有想好放什么. 
+            主页还没有想好放什么. 
           </p>
           <p className="p-4 text-white text-md">
-            这里是一个音频播放器 (青蛙牌), 所有 vup 的回放都可以放在这里, 大家可以把这里当作一个播放器 (青蛙牌). 
+            这里是一个音频播放器 (青蛙牌), 放了很多喜欢的切片在这里!
           </p>
           <p className="p-4 text-white text-md">
-            本站的目的是做一个播放器 (青蛙牌), feel free to use it and make this place your home.
+            feel free to use it and make this place your home.
           </p>
           <p className="p-4 text-white text-md">
-            这里多么简陋啊! 简陋得好似浑然天成的一块儿.
+            这里简陋得像要散架了一样, 时不时就会出故障, 但是欢迎所有人来玩.
           </p>
           <p className="p-4 text-white text-md">
-            所有功能由 [ 我自己 ] 倾情维护中.
+            所有功能由 [ 我自己 ] 倾情维护中!
           </p>
 
         </div>

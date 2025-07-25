@@ -1,18 +1,20 @@
 "use client";
 
-import useGetSongById from "@/hooks/useGetSongById";
-import usePlayer from "@/hooks/usePlayer";
-import useLoadSongUrl from "@/hooks/useLoadSongUrl";
-import PlayerContent from "./PlayerContent";
+import useGetSongById from "@/hooks/useGetSongById"
+import usePlayer from "@/hooks/usePlayer"
+import useLoadSongUrl from "@/hooks/useLoadSongUrl"
+import PlayerContent from "./PlayerContent"
+import toast from "react-hot-toast";
+import { useEffect } from "react";
 
 const Player = () => {
-  const player = usePlayer();
-  const { song } = useGetSongById(player.activeId);
+  const player = usePlayer()
+  const { song: audio } = useGetSongById(player.activeId)
 
-  const songUrl = useLoadSongUrl(song!);
+  const audioUrl = useLoadSongUrl(audio!)
 
-  if (!song || !songUrl || !player.activeId) {
-    return null;
+  if (!audio || !audioUrl || !player.activeId) {
+    return null
   }
 
   return (
@@ -28,12 +30,12 @@ const Player = () => {
       "
     >
       <PlayerContent 
-        key={songUrl}
-        song={song}
-        songUrl={songUrl}
+        key={audioUrl}
+        audio={audio}
+        audioUrl={audioUrl}
       />
     </div>
   )
 }
 
-export default Player;
+export default Player

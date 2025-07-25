@@ -73,7 +73,6 @@ const FileBlock: React.FC<FileBlockProps> = ({
             setIsDeleting(true)
             onDeleteFile(data.id, data.path, data.type)
             setIsDeleting(false)
-            r
           }}
           className="
             flex
@@ -113,7 +112,9 @@ const FileBlock: React.FC<FileBlockProps> = ({
         rounded-md
       ">
         <FolderItem 
-          onClick={!isLoading ? (data: FileNode) => {onOpenFolder(data)}: () => {}}
+          onClick={isLoading ? () => {} : 
+            (data: FileNode) => {onOpenFolder(data)}
+          }
           key={data.id}
           data={data}
           className="bg-transparent hover:bg-transparent p-0"

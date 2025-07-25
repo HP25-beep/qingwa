@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import useUploadModal from "@/hooks/useUploadModal";
 import { useUser } from "@/hooks/useUser";
 import { useUserFS } from "@/hooks/useUserFS";
-// import useOnPlay from "@/hooks/useOnPlay";
+import useOnPlay from "@/hooks/useOnPlay";
 
 import { FileNode } from "@/types";
 
@@ -26,9 +26,18 @@ const Library = () => {
     popPath,
     update
   } = useUserFS()
+
+  const getAudiosInNodes = (curChildNodes: FileNode[]) => {
+    let temp: FileNode[] = []
+    curChildNodes.forEach((v, _) => {
+      if (v.type === 1) {
+        temp.push(v)
+    }})
+    return temp
+  }
   
-  // const songs = await getSongsByUserId();
-  // const onPlay = useOnPlay(songs);
+  const audios = getAudiosInNodes(curChildNodes)
+  const onPlay = useOnPlay(audios)
 
   const [isEditing, setIsEditing] = useState(false)
 
@@ -45,8 +54,8 @@ const Library = () => {
   }
 
   // 进入文件
-  const enterFile = () => {
-
+  const enterFile = (data: FileNode) => {
+    onPlay(data.id)
   }
 
   // 删除子目录
