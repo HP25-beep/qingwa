@@ -1,20 +1,21 @@
 import getSongsByTitle from "@/actions/getSongsByTitle"
-import Header from "@/components/Header";
-import SearchContent from "./components/SearchContent";
+import Header from "@/components/Header"
+import SearchContent from "./components/SearchContent"
+import getMediasByName from "@/lib/db/getMediasByName"
 
 interface SearchProps {
   searchParams: Promise<{
-    title: string;
+    title: string
   }>
 };
 
-export const revalidate = 0;
+export const revalidate = 0
 
 const Search = async ({ searchParams }: SearchProps) => {
 
-  const { title } = await searchParams;
+  const { title } = await searchParams
 
-  const songs = await getSongsByTitle(title);
+  const data = await getMediasByName(title)
 
   return (
     <div
@@ -33,9 +34,9 @@ const Search = async ({ searchParams }: SearchProps) => {
           </h1>
         </div>
       </Header>
-      <SearchContent songs={songs} />
+      <SearchContent audios={data} />
     </div>
   )
 }
 
-export default Search;
+export default Search

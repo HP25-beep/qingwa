@@ -59,7 +59,6 @@ const Account = () => {
     const file = e.target.files[0];
     const fileExt = file.name.split(".").pop();
     const fileName = `${uniqid()}.${fileExt}`;
-    const filePath = `${user.id}/${fileName}`;
 
     if (!file.type.startsWith("image/")) {
       toast.error("Only image files are allowed.");
@@ -70,8 +69,8 @@ const Account = () => {
 
     const { error: uploadError } = await supabase
       .storage
-      .from("user_avatar")
-      .upload(filePath, file, {
+      .from("useravatar")
+      .upload(fileName, file, {
         cacheControl: "3600",
         upsert: true,
       });
@@ -84,11 +83,11 @@ const Account = () => {
 
     const {
       data: { publicUrl },
-    } = supabase.storage.from("useravatar").getPublicUrl(filePath);
+    } = supabase.storage.from("useravatar").getPublicUrl(fileName);
 
     const { error: dbError } = await supabase
       .from("users")
-      .update({ avatar_url: publicUrl })
+      .update({ avatar_url: fileName })
       .eq("id", user.id);
 
     setUploading(false);
@@ -139,6 +138,7 @@ const Account = () => {
               src={avatarUrl}
               alt="Avatar"
               className="w-24 h-24 rounded-full object-cover"
+              sizes="80"
             />
           )}
           <input

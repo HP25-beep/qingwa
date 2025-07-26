@@ -8,7 +8,7 @@ const LoginButton = () => {
   const router = useRouter();
 
   const onClick = () => {
-    router.replace('/auth/login');
+    router.push('/auth/login');
   }
 
   return (

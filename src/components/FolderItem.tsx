@@ -51,6 +51,7 @@ const FolderItem: React.FC<FolderItemProps> = ({
           src={imageUrl}
           alt="Folder Item"
           className="object-cover"
+          sizes="26"
         /> }
       </div>
       <div 

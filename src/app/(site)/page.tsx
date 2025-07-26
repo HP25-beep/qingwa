@@ -24,7 +24,7 @@ export default async function Home() {
               font-semibold
             "
           >
-            欢迎回家
+            Welcome Back
           </h1>
           {/* <div
             className="
@@ -49,7 +49,7 @@ export default async function Home() {
       <div className="mt-2 mb-7 px-6">
         <div className="flex justify-between items-center">
           <h1 className="text-white text-2xl font-semibold">
-            聊聊一些话
+            首页
           </h1>
         </div>
 
@@ -63,7 +63,7 @@ export default async function Home() {
           "
         >
           <p className="p-4 text-white text-md">
-            主页还没有想好放什么. 
+            首页还没有想好放什么. 
           </p>
           <p className="p-4 text-white text-md">
             这里是一个音频播放器 (青蛙牌), 放了很多喜欢的切片在这里!

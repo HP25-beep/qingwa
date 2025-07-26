@@ -2,6 +2,7 @@ import getSongs from "@/actions/getSongs";
 import Header from "@/components/Header";
 import ListItem from "@/components/ListItem";
 
+import ExploreContent from "./components/ExploreContent";
 import ExploreFileContent from "./components/ExploreFileContent";
 // import { createClient } from "@/lib/supabase/client";
 
@@ -39,7 +40,7 @@ export default function Explore() {
             最新的音声
           </h1>
         </div>
-        {/* <ExploreContent songs={songs} /> */}
+        <ExploreContent/>
       </div>
     </div>
   );

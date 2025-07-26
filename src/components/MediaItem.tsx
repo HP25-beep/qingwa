@@ -1,12 +1,12 @@
 "use client"
 
-import Image from "next/image";
+// import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import { BiMusic } from "react-icons/bi";
 
 import { FileNode } from "@/types"
 
-import useLoadImage from "@/hooks/useLoadImage";
+// import useLoadImage from "@/hooks/useLoadImage";
 import usePlayer from "@/hooks/usePlayer";
 
 interface MediaItemProps {

@@ -29,7 +29,7 @@ const FileExploreContent: React.FC<FileExploreContentProps> = ({
   const onPlay = useOnPlay(audios)
   
   const enterFolder = (data: FileNode) => {
-    router.replace(`/fileExplore/${data.id}`)
+    router.push(`/fileExplore/${data.id}`)
   }
 
   const enterFile = (data: FileNode) => {
@@ -40,6 +40,7 @@ const FileExploreContent: React.FC<FileExploreContentProps> = ({
     <div className="flex flex-col gap-y-2 w-full px-6">   
       {files.map((item) => (
         <div
+          key={item.id}
           className="flex items-center gap-x-4 w-full"  
         >
           <FileBlock 

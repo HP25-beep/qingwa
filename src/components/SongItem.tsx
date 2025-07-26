@@ -1,21 +1,31 @@
 "use client";
 
 import useLoadImage from "@/hooks/useLoadImage";
-import { Song } from "@/types"
+import { BiMusic, BiSolidDisc } from "react-icons/bi";
+import { RiDiscLine } from "react-icons/ri";
+import { FileNode, Song } from "@/types"
 import Image from "next/image";
 
 import PlayButton from "./PlayButton";
 
 interface SongItemProps {
-  onClick: (id: string) => void;
-  data: Song
+  onClick: (id: number) => void;
+  data: FileNode
 }
 
 const SongItem: React.FC<SongItemProps> = ({
   data, 
   onClick
 }) => {
-  const imagePath = useLoadImage(data);
+  // const imagePath = useLoadImage(data);
+  
+  function isObject(obj: any): obj is Record<string, any> {
+    return obj !== null && typeof obj === 'object' && !Array.isArray(obj);
+  }
+
+  function hasAuthor(obj: any): obj is { author: string } {
+    return isObject(obj) && !Array.isArray(obj.author) && typeof obj.author === 'string';
+  }
   
   return (
     <div
@@ -39,24 +49,35 @@ const SongItem: React.FC<SongItemProps> = ({
     >
       <div
         className="
+        flex
         relative
         aspect-square
         w-full
         h-full
+        items-center
+        justify-center
         rounded-md
         overflow-hidden
       "
       >
-        <Image
+        <RiDiscLine 
+          className="
+            items-center
+            justify-center
+            text-neutral-400
+          "
+          size={64}
+        />
+        {/* <Image
           className="object-cover"
           src={imagePath || '/images/liked.png'}
           fill 
           alt="Image"
-        />
+        /> */}
       </div>
       <div className="flex flex-col items-start w-full pt-4 gap-y-1">
         <p className="font-semibold truncatee w-full">
-          {data.title}
+          {data.name}
         </p>
         <p
           className="
@@ -66,7 +87,7 @@ const SongItem: React.FC<SongItemProps> = ({
             w-full
           "
         >
-          By {data.author}
+          {hasAuthor(data.detail) ? data.detail.author : ""}
         </p>
       </div>
       <div className="

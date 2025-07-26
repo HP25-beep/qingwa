@@ -6,12 +6,13 @@ import { BiSolidUser } from 'react-icons/bi';
 import { useRouter } from 'next/navigation';
 // import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import toast from 'react-hot-toast';
-
+import Image from 'next/image';
 import usePlayer from '@/hooks/usePlayer';
 import { useUser } from '@/hooks/useUser';
 
 import Button from '../Button';
 import { createClient } from '@/lib/supabase/client';
+import useLoadAvatar from '@/hooks/useLoadAvatar';
 
 const UserMenu = () => {
   const supabase = createClient();
@@ -20,6 +21,7 @@ const UserMenu = () => {
   const router = useRouter();
 
   const { user, userDetails } = useUser();
+  const userAvatar = useLoadAvatar(userDetails?.avatar_url ?? null)
   
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuOpen2, setIsMenuOpen2] = useState(false);
@@ -85,14 +87,23 @@ const UserMenu = () => {
             w-8 
             h-8 
             items-center 
+            justify-center
             rounded-full 
             bg-gradient-to-br 
             from-emerald-800 
             to-pink-300 
-            justify-center
+            overflow-hidden
           "
         >
-          <BiSolidUser size={16} />
+          {userAvatar ? 
+            <div className='w-8 h-8 overflow-hidden relative rounded-lg border'> 
+              <Image
+                fill
+                src={userAvatar}
+                alt="Image"
+                sizes='8px'
+              /> 
+            </div> : <BiSolidUser size={16} />}
         </div>
         <span className="text-sm font-medium hidden text-white md:block">
           {userDetails?.full_name || "Username"}

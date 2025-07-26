@@ -28,7 +28,7 @@ const ExploreFileContent = () => {
   }, [])
 
   const handleClick = (data: FileNode) => {
-    router.replace(`/fileExplore/${data.id}`)
+    router.push(`/fileExplore/${data.id}`)
   }
 
 
