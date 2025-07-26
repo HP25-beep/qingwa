@@ -1,4 +1,3 @@
-import getSongsByTitle from "@/actions/getSongsByTitle"
 import Header from "@/components/Header"
 import SearchContent from "./components/SearchContent"
 import getMediasByName from "@/lib/db/getMediasByName"

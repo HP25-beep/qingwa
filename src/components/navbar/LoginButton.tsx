@@ -1,7 +1,8 @@
 import { useRouter } from "next/navigation";
 import { BiSolidUser } from "react-icons/bi";
 
-import Button from "../Button";
+// import Button from "../Button";
+import { Button } from "../ui/button";
 
 const LoginButton = () => {
   

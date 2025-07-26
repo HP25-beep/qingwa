@@ -1,10 +1,7 @@
-import getSongs from "@/actions/getSongs";
 import Header from "@/components/Header";
-import ListItem from "@/components/ListItem";
 
 import ExploreContent from "./components/ExploreContent";
 import ExploreFileContent from "./components/ExploreFileContent";
-// import { createClient } from "@/lib/supabase/client";
 
 export const revalidate = 0;
 
@@ -34,7 +31,7 @@ export default function Explore() {
           <ExploreFileContent/>
         </div>
       </Header>
-      <div className="mt-2 mb-7 px-6">
+      <div className="mt-2 mb-7 p-6">
         <div className="flex justify-between items-center">
           <h1 className="text-white text-2xl font-semibold">
             最新的音声

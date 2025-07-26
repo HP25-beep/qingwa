@@ -1,13 +1,12 @@
 "use client";
 
-import { useState } from 'react';
-
-import { BiSolidUser } from 'react-icons/bi';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-// import { useSupabaseClient } from '@supabase/auth-helpers-react';
-import toast from 'react-hot-toast';
 import Image from 'next/image';
 import usePlayer from '@/hooks/usePlayer';
+import { BiSolidUser } from 'react-icons/bi';
+import toast from 'react-hot-toast';
+
 import { useUser } from '@/hooks/useUser';
 
 import Button from '../Button';
@@ -20,8 +19,19 @@ const UserMenu = () => {
   const player = usePlayer();
   const router = useRouter();
 
-  const { user, userDetails } = useUser();
-  const userAvatar = useLoadAvatar(userDetails?.avatar_url ?? null)
+  const { userDetails, isLoading } = useUser()
+  const [userAvatar, setUserAvatar] = useState<string | null>(null)
+
+  useEffect(() => {
+    const doit = () => {
+      if(userDetails) {
+        setUserAvatar(useLoadAvatar(userDetails!.avatar_url))
+      } else {
+        setUserAvatar(null)
+      }
+    }
+    doit()
+}, [isLoading, userDetails])
   
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuOpen2, setIsMenuOpen2] = useState(false);
@@ -106,7 +116,7 @@ const UserMenu = () => {
             </div> : <BiSolidUser size={16} />}
         </div>
         <span className="text-sm font-medium hidden text-white md:block">
-          {userDetails?.full_name || "Username"}
+          {userDetails!.full_name ?? "Username"}
         </span>
       </Button>
       

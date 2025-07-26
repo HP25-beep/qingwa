@@ -7,7 +7,6 @@ import { BiHomeAlt2, BiCompass } from 'react-icons/bi';
 import LoginButton from './LoginButton';
 
 import { useUser } from '@/hooks/useUser';
-// import useAuthModal from '@/hooks/useAuthModal';
 
 import SearchInput from './SearchInput';
 import NavigationButton from './NavigationButton';
@@ -20,8 +19,7 @@ const Navbar: React.FC = () => {
   const pathname = usePathname();
   const router = useRouter();
   
-  // const AuthModal = useAuthModal();
-  const { user } = useUser();
+  const { userDetails, isLoading } = useUser();
 
   const routes = useMemo(() => 
       {
@@ -117,7 +115,7 @@ const Navbar: React.FC = () => {
 
       {/* Right Section - Account Controls */}
       <div className='flex-1 w-1/4'>
-        {user ? (
+        {userDetails || !isLoading ? (
           <UserMenu />
         ) : (
           <LoginButton />
