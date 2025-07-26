@@ -1,8 +1,5 @@
 import getFilesBySlug from '@/lib/db/getFilesBySlug'
 
-import { FileNode } from '@/types'
-
-import FileBlock from '@/components/library/FileBlock'
 import FileExploreContent from './components/FileExploreContent'
 
 export default async function fileExplore({ params }: { params: { slug: string } }) {

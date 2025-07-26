@@ -1,10 +1,7 @@
 "use client";
 
-import useLoadImage from "@/hooks/useLoadImage";
-import { BiMusic, BiSolidDisc } from "react-icons/bi";
 import { RiDiscLine } from "react-icons/ri";
 import { FileNode, Song } from "@/types"
-import Image from "next/image";
 
 import PlayButton from "./PlayButton";
 
@@ -40,9 +37,9 @@ const SongItem: React.FC<SongItemProps> = ({
         rounded-md
         overflow-hidden
         gap-x-4
-        bg-neutral-400/5
+        bg-white/0
         cursor-pointer
-        hover:bg-neutral-400/10
+        hover:bg-neutral-400/80
         transition
         p-3
       "
@@ -60,14 +57,26 @@ const SongItem: React.FC<SongItemProps> = ({
         overflow-hidden
       "
       >
-        <RiDiscLine 
+        <div
           className="
+            flex
+            bg-neutral-600/80
+            rounded-2xl
+            w-[80%]
+            h-[80%]
             items-center
             justify-center
-            text-neutral-400
           "
-          size={64}
-        />
+        >          
+          <RiDiscLine 
+            className="
+              items-center
+              justify-center
+              text-neutral-300/80
+            "
+            size={64}
+          />
+        </div>
         {/* <Image
           className="object-cover"
           src={imagePath || '/images/liked.png'}
@@ -76,12 +85,12 @@ const SongItem: React.FC<SongItemProps> = ({
         /> */}
       </div>
       <div className="flex flex-col items-start w-full pt-4 gap-y-1">
-        <p className="font-semibold truncatee w-full">
+        <p className="font-semibold text-white/90 truncatee w-full">
           {data.name}
         </p>
         <p
           className="
-            text-neutral-400
+            text-neutral-300/80
             text-sm
             pb-4
             w-full

@@ -27,7 +27,6 @@ const FolderItem: React.FC<FolderItemProps> = ({
         items-center
         gap-x-3
         cursor-pointer
-        hover:bg-neutral-800/50
         w-full
         p-2
         rounded-md
@@ -63,10 +62,10 @@ const FolderItem: React.FC<FolderItemProps> = ({
           overflow-hidden
         "
       >
-        <p className="text-white truncate">
+        <p className="text-white/90 truncate">
           {data.name}
         </p>
-        <p className="text-neutral-400 text-sm truncate">
+        <p className="text-neutral-300/80 text-sm truncate">
           created by: in developing...
         </p>
       </div>  

@@ -2,16 +2,16 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import usePlayer from '@/hooks/usePlayer';
-import { BiSolidUser } from 'react-icons/bi';
 import toast from 'react-hot-toast';
 
 import { useUser } from '@/hooks/useUser';
 
-import Button from '../Button';
+// import Button from '../Button';
+import { Button } from '../ui/button';
 import { createClient } from '@/lib/supabase/client';
 import useLoadAvatar from '@/hooks/useLoadAvatar';
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 const UserMenu = () => {
   const supabase = createClient();
@@ -20,14 +20,14 @@ const UserMenu = () => {
   const router = useRouter();
 
   const { userDetails, isLoading } = useUser()
-  const [userAvatar, setUserAvatar] = useState<string | null>(null)
+  const [userAvatar, setUserAvatar] = useState<string>("")
 
   useEffect(() => {
     const doit = () => {
       if(userDetails) {
         setUserAvatar(useLoadAvatar(userDetails!.avatar_url))
       } else {
-        setUserAvatar(null)
+        setUserAvatar("")
       }
     }
     doit()
@@ -75,48 +75,27 @@ const UserMenu = () => {
       <Button
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        variant={"outline"}
         className="
           flex 
           items-center 
-          space-x-2 
-          bg-white/5 
-          hover:bg-neutral-800/90
-          transition-colors
+          space-x-1 
           rounded-full 
+          h-8
           max-w-[150px]
-          min-w-[80px]
-          px-2 
-          py-1 
-          ml-auto  <!-- 关键：靠右对齐 -->
+          min-w-[0px]
+          ml-auto
           overflow-hidden
-          backdrop-blur-sm <!-- 可选：轻微毛玻璃效果 -->
         "
       >
-        <div className="
-            flex 
-            w-8 
-            h-8 
-            items-center 
-            justify-center
-            rounded-full 
-            bg-gradient-to-br 
-            from-emerald-800 
-            to-pink-300 
-            overflow-hidden
-          "
-        >
-          {userAvatar ? 
-            <div className='w-8 h-8 overflow-hidden relative rounded-lg border'> 
-              <Image
-                fill
-                src={userAvatar}
-                alt="Image"
-                sizes='8px'
-              /> 
-            </div> : <BiSolidUser size={16} />}
-        </div>
-        <span className="text-sm font-medium hidden text-white md:block">
-          {userDetails!.full_name ?? "Username"}
+        <Avatar className='max-w-[110px] max-h-[110px]'>
+          <AvatarImage className='max-w-[110px] max-h-[110px]' src={userAvatar}/>
+          <AvatarFallback>
+            AT
+          </AvatarFallback>
+        </Avatar>
+        <span className="text-sm font-medium hidden text-black md:block">
+          {userDetails?.full_name ?? "Username"}
         </span>
       </Button>
       
@@ -130,7 +109,7 @@ const UserMenu = () => {
             mt-2 
             w-48 
             transition-colors
-            bg-neutral-800/90
+            bg-neutral-300/10
             rounded-lg
             shadow-lg 
             border-0
@@ -140,22 +119,26 @@ const UserMenu = () => {
         >
           <a 
             href="/account" 
-            className="block px-4 py-2 text-sm text-gray-300 hover:bg-neutral-700/90 hover:text-white transition-colors">
+            className="
+                block px-4 py-2 text-sm 
+                text-black/60 
+                hover:bg-neutral-300/30 
+                hover:text-white 
+                transition-colors
+              "
+            >
             Account
           </a>
-          <hr className="my-1 border-neutral-600/50" />
+          <hr className="my-1 border-black/60" />
           <a 
             onClick={handleLogout}
             className="
-              block 
-              px-4 
-              py-2 
-              text-sm 
-              text-gray-300 
-              hover:bg-neutral-700/90 
-              hover:text-white 
-              transition-colors
-            "
+                block px-4 py-2 text-sm 
+                text-black/60 
+                hover:bg-neutral-300/30 
+                hover:text-white 
+                transition-colors
+              "
           >
             Logout
           </a>

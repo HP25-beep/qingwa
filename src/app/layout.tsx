@@ -44,19 +44,21 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ToasterProvider />
-        <UserProvider>
-          <UserFSProvider>
-            <ModalProvider />
+        <div className="flex flex-col h-full w-full min-h-screen bg-cover bg-center bg-no-repeat bg-[url('/background.jpg')]">
+          <ToasterProvider />
+          <UserProvider>
+            <UserFSProvider>
+              <ModalProvider />
 
-            <Navbar />
-            <MainWindow>
-              {children}
-            </MainWindow>
-            <Player />
+              <Navbar />
+              <MainWindow>
+                {children}
+              </MainWindow>
+              <Player />
 
-          </UserFSProvider>
-        </UserProvider>
+            </UserFSProvider>
+          </UserProvider>
+        </div>
       </body>
     </html>
   );

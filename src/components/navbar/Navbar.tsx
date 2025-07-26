@@ -11,7 +11,7 @@ import { useUser } from '@/hooks/useUser';
 import SearchInput from './SearchInput';
 import NavigationButton from './NavigationButton';
 import UserMenu from './UserMenu';
-import Button from '../Button';
+import { Button } from '../ui/button';
 import Logo from './Logo';
 
 const Navbar: React.FC = () => {
@@ -44,11 +44,11 @@ const Navbar: React.FC = () => {
       className="
         sticky 
         flex
-        bg-black
-        backdrop-blur-md 
-        text-white 
+        bg-white/0
+        text-black 
         px-6 
         pt-2
+        pb-1.5
         items-center 
         justify-center 
         top-0 
@@ -73,31 +73,25 @@ const Navbar: React.FC = () => {
         ">
           <Button
             onClick={() => router.back()}
+            variant="outline" 
+            size="icon"
             className="
+              size-8
               rounded-full
-              bg-black
-              flex
-              items-center
-              justify-center
-              hover:opacity-75
-              transition
             "
           >
-            <RxCaretLeft className="text-neutral-400" size={24}/>
+            <RxCaretLeft size={24}/>
           </Button>
           <Button
-          onClick={() => router.forward()}
+            onClick={() => router.forward()}
+            variant="outline" 
+            size="icon"
             className="
+              size-8
               rounded-full
-              bg-black
-              flex
-              items-center
-              justify-center
-              hover:opacity-75
-              transition
             "
           >
-            <RxCaretRight className="text-neutral-400" size={24}/>
+            <RxCaretRight size={24}/>
           </Button>
         </div>
         
@@ -115,7 +109,7 @@ const Navbar: React.FC = () => {
 
       {/* Right Section - Account Controls */}
       <div className='flex-1 w-1/4'>
-        {userDetails || !isLoading ? (
+        {userDetails && !isLoading ? (
           <UserMenu />
         ) : (
           <LoginButton />

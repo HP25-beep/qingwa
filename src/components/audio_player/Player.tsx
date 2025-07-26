@@ -4,8 +4,7 @@ import useGetSongById from "@/hooks/useGetSongById"
 import usePlayer from "@/hooks/usePlayer"
 import useLoadSongUrl from "@/hooks/useLoadSongUrl"
 import PlayerContent from "./PlayerContent"
-import toast from "react-hot-toast";
-import { useEffect } from "react";
+import Box from "../Box";
 
 const Player = () => {
   const player = usePlayer()
@@ -22,18 +21,17 @@ const Player = () => {
       className="
         fixed
         bottom-0
-        bg-black
         w-full
-        py-2
         h-[75px]
-        px-4
       "
     >
-      <PlayerContent 
-        key={audioUrl}
-        audio={audio}
-        audioUrl={audioUrl}
-      />
+      <Box>
+        <PlayerContent 
+          key={audioUrl}
+          audio={audio}
+          audioUrl={audioUrl}
+        />
+      </Box>
     </div>
   )
 }

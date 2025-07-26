@@ -9,7 +9,6 @@ import useSound from "use-sound";
 
 import usePlayer from "@/hooks/usePlayer";
 import MediaItem from "../MediaItem";
-import LikeButton from "../LikeButton";
 import Slider from "./Slider";
 
 interface PlayerContentProps {
@@ -154,9 +153,9 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
           onClick={onPlayPrevious}
           size={30}
           className="
-            text-neutral-400
+            text-neutral-300/80
             cursor-pointer
-            hover:text-white
+            hover:text-white/90
             transition
           "
         />
@@ -168,20 +167,21 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
             h-10
             w-10
             rounded-full
-            bg-white
+            bg-neutral-100/80
+            hover:bg-white/90
             p-1
             cursor-pointer
           "  
         >
-          <Icon size={30} className="text-black" />
+          <Icon size={30} className="text-black/80" />
         </div>
         <AiFillStepForward 
           onClick={onPlayNext}
           size={30}
           className="
-            text-neutral-400
+            text-neutral-300/80
             cursor-pointer
-            hover:text-white
+            hover:text-white/90
             transition
           "
         />
@@ -191,7 +191,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
         <div className="flex items-center gap-x-2 w-[120px]">
           <VolumeIcon 
             onClick={toggleMute}
-            className="cursor-pointer"
+            className="cursor-pointer text-white/90"
             size={25}
           />
           <Slider 

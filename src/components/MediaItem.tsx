@@ -1,12 +1,10 @@
 "use client"
 
-// import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import { BiMusic } from "react-icons/bi";
 
 import { FileNode } from "@/types"
 
-// import useLoadImage from "@/hooks/useLoadImage";
 import usePlayer from "@/hooks/usePlayer";
 
 interface MediaItemProps {
@@ -46,7 +44,6 @@ const MediaItem: React.FC<MediaItemProps> = ({
         items-center
         gap-x-3
         cursor-pointer
-        hover:bg-neutral-800/50
         w-full
         p-2
         rounded-md
@@ -69,7 +66,7 @@ const MediaItem: React.FC<MediaItemProps> = ({
       >
         <BiMusic 
           className="
-            text-neutral-400
+            text-neutral-300/80
           "
           size={26}
         />
@@ -82,10 +79,10 @@ const MediaItem: React.FC<MediaItemProps> = ({
           overflow-hidden
         "
       >
-        <p className="text-white truncate">
+        <p className="text-white/90 truncate">
           {data.name}
         </p>
-        <p className="text-neutral-400 text-sm truncate">
+        <p className="text-neutral-300/80 text-sm truncate">
           {hasAuthor(data.detail) ? data.detail.author : ""}
         </p>
       </div>  

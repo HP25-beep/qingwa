@@ -15,39 +15,36 @@ const LoginButton = () => {
   return (
     <Button
       onClick={onClick}
+      variant="outline"
       className="
         flex 
         items-center 
-        space-x-2 
-        bg-white/5 
-        hover:bg-white/10 
-        transition-colors
+        space-x-1 
         rounded-full 
+        h-8
         max-w-[150px]
         min-w-[0px]
-        px-2 
-        py-1 
-        ml-auto  <!-- 关键：靠右对齐 -->
+        ml-auto
         overflow-hidden
-        hover:border-white/10
-        backdrop-blur-sm
       "
     >
       <div className="
           flex 
-          w-8 
-          h-8 
+          w-6 
+          h-6 
           items-center 
           rounded-full 
           bg-gradient-to-br 
-          from-emerald-800  
-          to-pink-300
+          from-emerald-600
+          via-pink-200
+          to-white
+          duration-75
           justify-center
         "
       >
-        <BiSolidUser size={16} />
+        <BiSolidUser size={12} />
       </div>
-      <span className="text-white">Log in</span>
+      <span className="text-black">Log in</span>
     </Button>
   )
 }

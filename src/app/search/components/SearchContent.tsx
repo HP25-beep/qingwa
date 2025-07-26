@@ -4,6 +4,7 @@ import { FileNode, Song } from "@/types";
 import MediaItem from "@/components/MediaItem";
 import LikeButton from "@/components/LikeButton";
 import useOnPlay from "@/hooks/useOnPlay";
+import FileBlock from "@/components/library/FileBlock";
 
 interface SearchContentProps {
   audios: FileNode[];
@@ -39,9 +40,16 @@ const SearchContent: React.FC<SearchContentProps> = ({
           className="flex items-center gap-x-4 w-full"  
         >
           <div className="flex-1">
-            <MediaItem 
-              onClick={(data: FileNode) => onPlay(data.id)}
-              data={song}  
+            <FileBlock 
+              data={song}
+              onEditing={false}
+              key={song.id}
+              handler={{
+                onOpenFolder: () => {}, 
+                onOpenFile: (data: FileNode) => onPlay(data.id), 
+                onDeleteFolder: () => {},
+                onDeleteFile: () => {},
+              }}
             />
           </div>
           {/* <LikeButton songId={song.id} /> */}

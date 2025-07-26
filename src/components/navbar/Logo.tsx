@@ -7,7 +7,7 @@ const Logo: React.FC = () => {
         className="
           w-6 
           h-px 
-          bg-pink-200
+          bg-black
           mr-2 
           group-hover:w-8 
           transition-all 
@@ -17,6 +17,7 @@ const Logo: React.FC = () => {
       <span 
         className="
           text-lg 
+          text-black
           font-medium 
           uppercase 
           tracking-widest">

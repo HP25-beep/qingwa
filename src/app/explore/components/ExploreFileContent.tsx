@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 import { FileNode } from "@/types"
+import FileBlock from "@/components/library/FileBlock"
 import FolderItem from "@/components/FolderItem"
 
 const ExploreFileContent = () => {
@@ -46,10 +47,16 @@ const ExploreFileContent = () => {
       "
     >
       {newFolders.map((item) => { return (
-        <FolderItem 
+        <FileBlock 
           data={item}
+          onEditing={false}
           key={item.id}
-          onClick={handleClick}
+          handler={{
+            onOpenFolder: (data) => handleClick(data), 
+            onOpenFile: () => {}, 
+            onDeleteFolder: () => {},
+            onDeleteFile: () => {},
+          }}
         />
       )})}
       {/* <ListItem

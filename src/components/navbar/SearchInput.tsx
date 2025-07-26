@@ -7,7 +7,7 @@ import { BiSearch } from "react-icons/bi";
 
 import useDebounce from "@/hooks/useDebounce";
 
-import Input from "../Input";
+// import Input from "../Input";
 
 const SearchInput = () => {
   const router = useRouter();
@@ -42,20 +42,21 @@ const SearchInput = () => {
         relative
         flex 
         items-center 
-        bg-white/5 
-        hover:bg-white/10 
+        bg-white 
+        hover:bg-white 
+        border
         transition-colors
         rounded-full 
         px-4 
         py-2
-        max-h-[45px]
+        max-h-9
         min-w-[180px] 
         max-w-[380px]
         w-full
       "
     >
-      <BiSearch size={16} className="text-gray-400 mr-3" />
-      <Input 
+      <BiSearch size={16} className="text-neutral-400 mr-3" />
+      <input 
         placeholder="What do you want to listen to ?"
         value={value}
         onChange={(e) => {
@@ -66,7 +67,7 @@ const SearchInput = () => {
           bg-transparent 
           flex-1 
           outline-none 
-          text-white/90 
+          text-black
           placeholder-gray-400 
           text-sm
         "

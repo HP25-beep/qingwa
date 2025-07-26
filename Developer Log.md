@@ -41,3 +41,6 @@ npm install server-only
 ## FileSystem
 
 0=普通文件夹，1=文件，2=软链接
+
+## Style beautify
+

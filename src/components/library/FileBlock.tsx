@@ -56,7 +56,7 @@ const FileBlock: React.FC<FileBlockProps> = ({
         items-center
         gap-x-3
         cursor-pointer
-        hover:bg-neutral-800/50
+        hover:bg-neutral-600/80
         w-full
         p-2
         rounded-md
@@ -106,7 +106,7 @@ const FileBlock: React.FC<FileBlockProps> = ({
         items-center
         gap-x-3
         cursor-pointer
-        hover:bg-neutral-800/50
+        hover:bg-neutral-600/80
         w-full
         p-2
         rounded-md

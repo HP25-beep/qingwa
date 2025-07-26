@@ -1,4 +1,8 @@
-// import { Song } from "@/types";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable"
 
 import Box from "./Box";
 import Library from "./library/Library";
@@ -14,16 +18,46 @@ const MainWindow: React.FC<MainWindowProps> = ({
 
   return (
     <MainWindowWrapper>
-      <div className="hidden md:flex flex-col gap-y-2 bg-black h-full w-[280px] p-2">
-        <Box 
-          className="overflow-y-auto h-full">
-          <Library/>
-        </Box>  
-      </div>
+      <ResizablePanelGroup       
+        direction="horizontal"
+        className="max-w-md rounded-lg md:min-w-full"
+      >
+        <ResizablePanel defaultSize={12}>
+          <div className="
+              flex
+              md:flex 
+              gap-y-0.5 
+              h-full 
+              w-full 
+              px-0.5
+            "
+          >
+            <Box className="overflow-y-auto h-full">
+              <Library/>
+            </Box> 
+          </div>
+        </ResizablePanel>
 
-      <main className="h-full flex-1 overflow-y-auto py-2">
-        {children}
-      </main>
+        <ResizableHandle />
+
+        <ResizablePanel defaultSize={50}>
+          <div className="
+              flex
+              md:flex 
+              gap-y-0.5 
+              h-full 
+              w-full 
+              px-0.5
+            "
+          >
+            <Box className="overflow-y-auto h-full">
+              <main>
+                {children}
+              </main> 
+            </Box>
+          </div>
+        </ResizablePanel>
+      </ResizablePanelGroup>
     </MainWindowWrapper>
   );
 }

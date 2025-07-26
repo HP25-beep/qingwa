@@ -8,15 +8,7 @@ export const revalidate = 0;
 export default function Explore() {
 
   return (
-    <div className="
-        bg-neutral-900
-        rounded-lg
-        h-full
-        w-full
-        overflow-hidden
-        overflow-y-auto
-      "
-    >
+    <div>
       <Header>
         <div className="mb-2">
           <h1

@@ -1,10 +1,10 @@
 import { createClient } from "@/lib/supabase/client";
 
-const useLoadAvatar = ( data: string | null ) => {
+const useLoadAvatar = ( data: string ) => {
   const supabase = createClient();
 
   if (!data) {
-    return null
+    return ""
   }
 
   const { data: imageData } = supabase

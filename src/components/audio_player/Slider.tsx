@@ -35,7 +35,7 @@ const Slider: React.FC<SliderProps> = ({
     >
       <RadixSlider.Track
         className="
-          bg-neutral-600
+          bg-neutral-300/50
           relative
           grow
           rounded-full
@@ -45,10 +45,10 @@ const Slider: React.FC<SliderProps> = ({
         <RadixSlider.Range
           className="
             absolute
-            bg-white
+            bg-white/90
             rounded-full
             h-full
-            text-white
+            text-white/90
           "
         />
       </RadixSlider.Track>

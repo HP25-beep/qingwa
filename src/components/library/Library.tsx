@@ -12,9 +12,6 @@ import useOnPlay from "@/hooks/useOnPlay";
 import { FileNode } from "@/types";
 
 import FileBlock from "./FileBlock";
-import Box from "../Box";
-// import getSongsByUserId from "@/actions/getNodesByUserId";
-import { createClient } from "@/lib/supabase/client";
 
 const Library = () => {
   const uploadModal = useUploadModal()
@@ -128,10 +125,10 @@ const Library = () => {
               gap-x-2
             "
           >
-            <BiSolidPlaylist className="text-neutral-400" size={26}/>
+            <BiSolidPlaylist className="text-neutral-300/80" size={26}/>
             <p 
               className="
-                text-neutral-400
+                text-neutral-300/80
                 font-medium
                 text-md
               "
@@ -145,9 +142,9 @@ const Library = () => {
             onClick={!isEmptyPath() ? back : (() => {})}
             size={20}
             className="
-              text-neutral-400
+              text-neutral-300/80
               cursor-pointer
-              hover:text-white
+              hover:text-neutral-100/80
               transition
             "
           />
@@ -156,9 +153,9 @@ const Library = () => {
             onClick={() => setIsEditing(!isEditing)}
             size={20}
             className="
-              text-neutral-400
+              text-neutral-300/80
               cursor-pointer
-              hover:text-white
+              hover:text-neutral-100/80
               transition
             "
           />
@@ -167,9 +164,9 @@ const Library = () => {
             onClick={onUpload}
             size={20}
             className="
-              text-neutral-400
+              text-neutral-300/80
               cursor-pointer
-              hover:text-white
+              hover:text-neutral-100/80
               transition
             "
           />
