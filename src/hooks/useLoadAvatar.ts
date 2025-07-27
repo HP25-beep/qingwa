@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/client";
 
-const useLoadAvatar = ( data: string ) => {
+const useLoadAvatar = ( data: string | null ) => {
   const supabase = createClient();
 
   if (!data) {

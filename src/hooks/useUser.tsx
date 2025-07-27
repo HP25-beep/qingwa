@@ -27,7 +27,7 @@ export function UserContextProvider({ children }: { children: React.ReactNode })
     const getSession = async () => {
       setIsLoading(true)
       
-      const { data: { session }, error } = await supabase.auth.getSession()
+      const { data: { session }, error: _error } = await supabase.auth.getSession()
       if (session?.user) {
 
         setUser(session.user)

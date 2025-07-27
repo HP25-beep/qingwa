@@ -18,7 +18,6 @@ const Library = () => {
   const { user } = useUser()
   const { 
     curChildNodes,
-    nodePath, 
     doUpdating, 
     isEmptyPath,
     pushPath,
@@ -56,8 +55,8 @@ const Library = () => {
   }, [user, doUpdating]);
 
   const getAudiosInNodes = (curChildNodes: FileNode[]) => {
-    let temp: FileNode[] = []
-    curChildNodes.forEach((v, _) => {
+    const temp: FileNode[] = []
+    curChildNodes.forEach((v) => {
       if (v.type === 1) {
         temp.push(v)
     }})

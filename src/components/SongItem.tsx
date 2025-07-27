@@ -1,7 +1,7 @@
 "use client";
 
 import { RiDiscLine } from "react-icons/ri";
-import { FileNode, Song } from "@/types"
+import { FileNode } from "@/types"
 
 import PlayButton from "./PlayButton";
 
@@ -16,11 +16,11 @@ const SongItem: React.FC<SongItemProps> = ({
 }) => {
   // const imagePath = useLoadImage(data);
   
-  function isObject(obj: any): obj is Record<string, any> {
+  function isObject(obj: unknown): obj is Record<string, unknown> {
     return obj !== null && typeof obj === 'object' && !Array.isArray(obj);
   }
 
-  function hasAuthor(obj: any): obj is { author: string } {
+  function hasAuthor(obj: unknown): obj is { author: string } {
     return isObject(obj) && !Array.isArray(obj.author) && typeof obj.author === 'string';
   }
   

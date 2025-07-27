@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import usePlayer from '@/hooks/usePlayer';
 import toast from 'react-hot-toast';
@@ -20,19 +20,8 @@ const UserMenu = () => {
   const player = usePlayer();
   const router = useRouter();
 
-  const { userDetails, isLoading } = useUser()
-  const [userAvatar, setUserAvatar] = useState<string>("")
-
-  useEffect(() => {
-    const doit = () => {
-      if(userDetails) {
-        setUserAvatar(useLoadAvatar(userDetails!.avatar_url))
-      } else {
-        setUserAvatar("")
-      }
-    }
-    doit()
-}, [isLoading, userDetails])
+  const { userDetails } = useUser()
+  const userAvatar = useLoadAvatar(userDetails?.avatar_url ?? null)
   
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuOpen2, setIsMenuOpen2] = useState(false);

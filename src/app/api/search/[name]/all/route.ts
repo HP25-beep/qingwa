@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server"
 
 
 export default async function GET(
-  req: NextRequest, 
+  _req: NextRequest, 
   { params }: { params: {name: string} }
 ) {
   const supabase = await createClient()
