@@ -13,7 +13,7 @@ export default function Explore() {
         <div className="mb-2">
           <h1
             className="
-              text-white
+              text-neutral-300/80
               text-3xl
               font-semibold
             "
@@ -25,7 +25,7 @@ export default function Explore() {
       </Header>
       <div className="mt-2 mb-7 p-6">
         <div className="flex justify-between items-center">
-          <h1 className="text-white text-2xl font-semibold">
+          <h1 className="text-neutral-300/80 text-2xl font-semibold">
             最新的音声
           </h1>
         </div>

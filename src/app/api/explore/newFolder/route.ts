@@ -5,9 +5,10 @@ export async function GET(req: NextRequest) {
   const supabase = await createClient()
   // const { data: { user } } = await supabase.auth.getUser()
   const { data, error } = await supabase
-    .from("fs")            // 替换为你的表名
-    .select("*")                        // 或指定字段
-    .eq("type", 0)            // 条件：status 为 active
+    .from("fs") 
+    .select("*") 
+    .eq("type", 0)
+    .is("parent_id", null)
     .order("created_at", { ascending: false })  // 按 created_at 降序
     .limit(8)
   

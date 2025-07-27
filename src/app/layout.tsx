@@ -9,9 +9,6 @@ import Player from "@/components/audio_player/Player";
 import UserProvider from "@/providers/UserProvider";
 import ModalProvider from "@/providers/ModalProvider";
 import ToasterProvider from "@/providers/ToasterProvider";
-import UserFSProvider from "@/providers/UserFSProvider";
-
-// import getSongsByUserId from "@/actions/getSongsByUserId";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,16 +44,13 @@ export default async function RootLayout({
         <div className="flex flex-col h-full w-full min-h-screen bg-cover bg-center bg-no-repeat bg-[url('/background.jpg')]">
           <ToasterProvider />
           <UserProvider>
-            <UserFSProvider>
-              <ModalProvider />
+            <ModalProvider />
 
-              <Navbar />
-              <MainWindow>
-                {children}
-              </MainWindow>
-              <Player />
-
-            </UserFSProvider>
+            <Navbar />
+            <MainWindow>
+              {children}
+            </MainWindow>
+            <Player />
           </UserProvider>
         </div>
       </body>

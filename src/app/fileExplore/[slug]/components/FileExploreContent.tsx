@@ -37,7 +37,7 @@ const FileExploreContent: React.FC<FileExploreContentProps> = ({
   }
 
   return (
-    <div className="flex flex-col gap-y-2 w-full px-6">   
+    <div className="flex flex-col gap-y-2 w-full">   
       {files.map((item) => (
         <div
           key={item.id}

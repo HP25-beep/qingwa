@@ -6,6 +6,7 @@ import usePlayer from '@/hooks/usePlayer';
 import toast from 'react-hot-toast';
 
 import { useUser } from '@/hooks/useUser';
+import Link from 'next/link';
 
 // import Button from '../Button';
 import { Button } from '../ui/button';
@@ -117,7 +118,7 @@ const UserMenu = () => {
             backdrop-blur-sm
           "
         >
-          <a 
+          <Link 
             href="/account" 
             className="
                 block px-4 py-2 text-sm 
@@ -128,7 +129,7 @@ const UserMenu = () => {
               "
             >
             Account
-          </a>
+          </Link>
           <hr className="my-1 border-black/60" />
           <a 
             onClick={handleLogout}

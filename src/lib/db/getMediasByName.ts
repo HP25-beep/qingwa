@@ -8,7 +8,7 @@ const getMediasByName = async (
     .from('fs')
     .select('*')
     .eq('type', 1)
-    .eq('name', name)
+    .ilike('name', `%${name}%`)
   
   if (error) {
     throw new Error('fail to get audios')

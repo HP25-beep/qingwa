@@ -23,6 +23,7 @@ const Player = () => {
         bottom-0
         w-full
         h-[75px]
+        pt-1
       "
     >
       <Box>

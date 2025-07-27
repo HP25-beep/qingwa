@@ -8,7 +8,6 @@ import { FileNode } from "@/types";
 // import { useDeleteSong } from "@/hooks/useDeleteSong";
 import MediaItem from "../MediaItem";
 import FolderItem from "../FolderItem";
-import { useUserFS } from "@/hooks/useUserFS";
 
 interface FileBlockProps {
   data: FileNode;
@@ -32,7 +31,6 @@ const FileBlock: React.FC<FileBlockProps> = ({
     onDeleteFolder,
     onDeleteFile,
   } = handler;
-  const { isLoading } = useUserFS();
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -112,7 +110,7 @@ const FileBlock: React.FC<FileBlockProps> = ({
         rounded-md
       ">
         <FolderItem 
-          onClick={isLoading ? () => {} : 
+          onClick={
             (data: FileNode) => {onOpenFolder(data)}
           }
           key={data.id}

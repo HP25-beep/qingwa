@@ -1,7 +1,7 @@
 "use client";
 
 import { BiMinus, BiPlus, BiSolidPlaylist, BiUpArrowAlt } from "react-icons/bi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 import useUploadModal from "@/hooks/useUploadModal";
@@ -18,11 +18,42 @@ const Library = () => {
   const { user } = useUser()
   const { 
     curChildNodes,
+    nodePath, 
+    doUpdating, 
     isEmptyPath,
     pushPath,
     popPath,
-    update
+    update,
+    reset,
+    getCurNode,
+    setIsLoading, 
+    setCurChildNodes, 
   } = useUserFS()
+
+  
+  // 实时更新子目录向量
+  useEffect(() => {
+    async function load() {
+      if (!user) {
+        reset();
+        return;
+      }
+      
+      const curNode = getCurNode();
+      try {
+        setIsLoading(true);
+        const res = await fetch(`/api/files${curNode ? `?parent_id=${curNode.id}` : ''}`);
+        const data = await res.json();
+        setCurChildNodes(data);
+      } catch {
+        setCurChildNodes([]);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    load();
+  }, [user, doUpdating]);
 
   const getAudiosInNodes = (curChildNodes: FileNode[]) => {
     let temp: FileNode[] = []
@@ -42,12 +73,14 @@ const Library = () => {
   const back = () => {
     if (!isEmptyPath()) {
       popPath()
+      update()
     }
   }
 
   // 进入子目录
   const enterFoler = (data: FileNode) => {
     pushPath(data)
+    update()
   }
 
   // 进入文件

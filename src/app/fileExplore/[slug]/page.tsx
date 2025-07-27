@@ -1,6 +1,7 @@
 import getFilesBySlug from '@/lib/db/getFilesBySlug'
 
 import FileExploreContent from './components/FileExploreContent'
+import Header from '@/components/Header'
 
 export default async function fileExplore({ params }: { params: { slug: string } }) {
   
@@ -26,7 +27,7 @@ export default async function fileExplore({ params }: { params: { slug: string }
 
   if (!files) {
     return (
-      <div className='text-white'>
+      <div className='text-neutral-300/80'>
         null!
       </div>
     )
@@ -34,15 +35,20 @@ export default async function fileExplore({ params }: { params: { slug: string }
 
 
   return (
-    <div
-      className="
-        bg-neutral-900
-        rounded-lg
-        h-full
-        overflow-hidden
-        overflow-y-auto
-      "
-    >    
+    <div> 
+      <Header>
+        <div className="mb-2">
+          <h1
+            className="
+              text-neutral-300/80
+              text-3xl
+              font-semibold
+            "
+          >
+            查看播单
+          </h1>
+        </div>
+      </Header>
       <FileExploreContent
         files={files}
       />

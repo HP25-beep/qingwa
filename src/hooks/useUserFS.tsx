@@ -1,94 +1,66 @@
-"use client"
+import { create } from 'zustand';
+import { FileNode } from '@/types';
 
-import { createContext, useContext, useEffect, useState } from "react";
-
-import { FileNode } from "@/types"
-import { useUser } from "./useUser";
-
-type UserFSContextType = {
+interface UserFSState {
   nodePath: (FileNode | null)[];
   curChildNodes: FileNode[];
-  isEmptyPath: () => boolean;
-  getCurNode: () => (FileNode | null);
-  pushPath: (node: FileNode) => any;
-  popPath: () => (FileNode | null);
   isLoading: boolean;
-  setIsLoading: (newState: boolean) => any;
-  update: () => any;
+  doUpdating: boolean;
+
+  isEmptyPath: () => boolean;
+  getCurNode: () => FileNode | null;
+  pushPath: (node: FileNode) => void;
+  popPath: () => FileNode | null;
+  setIsLoading: (state: boolean) => void;
+  setCurChildNodes: (nodes: FileNode[]) => void;
+  update: () => void;
+  reset: () => void;
 }
 
-export const UserFSContext = createContext<UserFSContextType | undefined>(undefined)
+export const useUserFS = create<UserFSState>((set, get) => ({
+  nodePath: [null],
+  curChildNodes: [],
+  isLoading: true,
+  doUpdating: false,
 
-export const UserFSContextProvider = ({children}: {children: React.ReactNode}) => {
+  isEmptyPath: () => get().nodePath.length === 1,
 
-  const { user } = useUser();
+  getCurNode: () => {
+    const path = get().nodePath;
+    return path[path.length - 1] ?? null;
+  },
 
-  const [nodePath, setNodePath] = useState<(FileNode | null)[]>([null])
-  const [curChildNodes, setCurChildNodes] = useState<FileNode[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [doUpdating, setDoUpdating] = useState(false)
-  const isEmptyPath = (): boolean => {
-    return nodePath.length === 1
-  }
-  const getCurNode = (): FileNode | null => {
-    return nodePath[nodePath.length - 1]
-  }
-  const pushPath = (node: FileNode): void => {
-    setNodePath((prev) => [...prev, node])
-  }
-  const popPath = (): FileNode | null => {
-    const node = nodePath[nodePath.length - 1]
-    setNodePath(prev => prev.slice(0, -1))
-    return node
-  }
-  const update = () => {setDoUpdating(!doUpdating)}
+  pushPath: (node) => {
+    set((state) => ({
+      nodePath: [...state.nodePath, node],
+    }));
+  },
 
-  useEffect(() => {
-    async function load() {
-      if (!user) {
-        setCurChildNodes([])
-        setNodePath([null])
-        return
-      }
-      try {
-        const curParentNode = getCurNode()
-        setIsLoading(true)
-        const res = await fetch(`/api/files${curParentNode ? `?parent_id=${curParentNode.id}` : ''}`)
-        if (!res.ok) {
-          throw new Error(`Fetch failed with status ${res.status}`)
-        }
-        const data = await res.json()
-        setIsLoading(false)
-        setCurChildNodes(data)
-      } catch {
-        setCurChildNodes([])
-      } 
-    }
-    load()
-  }, [user, nodePath, doUpdating])
+  popPath: () => {
+    const path = get().nodePath;
+    const node = path[path.length - 1] ?? null;
+    set((state) => ({
+      nodePath: state.nodePath.slice(0, -1),
+    }));
+    return node;
+  },
 
-  return (
-    <UserFSContext.Provider value = {{
-        nodePath,
-        curChildNodes,
-        isEmptyPath,
-        getCurNode,
-        pushPath,
-        popPath,
-        isLoading,
-        setIsLoading,
-        update
-    }}>
-      {children}
-    </UserFSContext.Provider>
-  )
-}
+  setIsLoading: (state) => {
+    set(() => ({ isLoading: state }));
+  },
 
-export const useUserFS = () => {
-  const userFS = useContext(UserFSContext)
-  if (!userFS) {
-    throw new Error('useUserFS must be used within a UserFSProvider');
-  }
-  
-  return userFS
-}
+  setCurChildNodes: (nodes) => {
+    set(() => ({ curChildNodes: nodes }));
+  },
+
+  update: () => {
+    set((state) => ({ doUpdating: !state.doUpdating }));
+  },
+
+  reset: () => {
+    set(() => ({
+      nodePath: [null],
+      curChildNodes: [],
+    }));
+  },
+}));
