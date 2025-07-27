@@ -1,8 +1,6 @@
 "use client";
 
-import { FileNode, Song } from "@/types";
-import MediaItem from "@/components/MediaItem";
-import LikeButton from "@/components/LikeButton";
+import { FileNode } from "@/types";
 import useOnPlay from "@/hooks/useOnPlay";
 import FileBlock from "@/components/library/FileBlock";
 

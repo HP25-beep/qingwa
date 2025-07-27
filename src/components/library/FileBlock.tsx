@@ -13,10 +13,10 @@ interface FileBlockProps {
   data: FileNode;
   onEditing: boolean;
   handler: {
-    onOpenFolder: (data: FileNode) => any; 
-    onOpenFile: (data: FileNode) => any; 
-    onDeleteFolder: (id: number, path: string, type: number) => any;
-    onDeleteFile: (id: number, path: string, type: number) => any;
+    onOpenFolder: (data: FileNode) => void; 
+    onOpenFile: (data: FileNode) => void; 
+    onDeleteFolder: (id: number, path: string, type: number) => void;
+    onDeleteFile: (id: number, path: string, type: number) => void;
   }
 }
 

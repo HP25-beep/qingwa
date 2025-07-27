@@ -8,7 +8,7 @@ import { twMerge } from "tailwind-merge";
 
 interface FolderItemProps {
   data: FileNode;
-  onClick: (data: FileNode) => any;
+  onClick: (data: FileNode) => void;
   className?: string
 }
 

@@ -17,8 +17,8 @@ const FileExploreContent: React.FC<FileExploreContentProps> = ({
   const router = useRouter()
 
   const getAudiosInNodes = (curChildNodes: FileNode[]) => {
-    let temp: FileNode[] = []
-    curChildNodes.forEach((v, _) => {
+    const temp: FileNode[] = []
+    curChildNodes.forEach((v) => {
       if (v.type === 1) {
         temp.push(v)
     }})

@@ -21,11 +21,11 @@ const MediaItem: React.FC<MediaItemProps> = ({
 
   const player = usePlayer()
 
-  function isObject(obj: any): obj is Record<string, any> {
+  function isObject(obj: unknown): obj is Record<string, unknown> {
     return obj !== null && typeof obj === 'object' && !Array.isArray(obj);
   }
 
-  function hasAuthor(obj: any): obj is { author: string } {
+  function hasAuthor(obj: unknown): obj is { author: string } {
     return isObject(obj) && !Array.isArray(obj.author) && typeof obj.author === 'string';
   }
   

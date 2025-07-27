@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
-import { stringify } from 'querystring'
+import { SupabaseClient } from '@supabase/supabase-js'
 
 // 递归查询所有子节点
-async function getAllDescendantIds(supabase: any, parentId: number): Promise<[number[], string[], number[]]> {
+async function getAllDescendantIds(supabase: SupabaseClient, parentId: number): Promise<[number[], string[], number[]]> {
   const ids: number[] = []
   const paths: string[] = []
   const types: number[] = []
@@ -44,9 +44,13 @@ export async function DELETE(
   // 查询要删除的数据项、文件实体
   const temp = await getAllDescendantIds(supabase, nodeId)
   const allIds: number[] = [nodeId, ...temp[0]]
-  let allFolderPaths: string[] = [...(temp[1].filter((_, idx) => temp[2][idx] === 0))]
-  let allFilePaths: string[] = [...(temp[1].filter((_, idx) => temp[2][idx] === 1))]
-  nodeType === 0 ? allFolderPaths.push(nodePath) : allFilePaths.push(nodePath)
+  const allFolderPaths: string[] = [...(temp[1].filter((_, idx) => temp[2][idx] === 0))]
+  const allFilePaths: string[] = [...(temp[1].filter((_, idx) => temp[2][idx] === 1))]
+  if (nodeType === 0) {
+    allFolderPaths.push(nodePath)
+  } else {
+    allFilePaths.push(nodePath)
+  }
   
   // 删除所有子孙节点 + 自己
   const { error } = await supabase.from('fs').delete().in('id', allIds)

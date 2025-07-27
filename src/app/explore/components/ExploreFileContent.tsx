@@ -5,13 +5,12 @@ import { useEffect, useState } from "react"
 
 import { FileNode } from "@/types"
 import FileBlock from "@/components/library/FileBlock"
-import FolderItem from "@/components/FolderItem"
 
 const ExploreFileContent = () => {
 
   const router = useRouter()
 
-  const [isLoading, setIsLoading] = useState(true)
+  const [_isLoading, setIsLoading] = useState(true)
   const [newFolders, setNewFolders] = useState<FileNode[]>([])
 
   useEffect(() => {

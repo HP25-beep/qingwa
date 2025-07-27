@@ -20,19 +20,8 @@ const UserMenu = () => {
   const player = usePlayer();
   const router = useRouter();
 
-  const { userDetails, isLoading } = useUser()
-  const [userAvatar, setUserAvatar] = useState<string>("")
-
-  useEffect(() => {
-    const doit = () => {
-      if(userDetails) {
-        setUserAvatar(useLoadAvatar(userDetails!.avatar_url))
-      } else {
-        setUserAvatar("")
-      }
-    }
-    doit()
-}, [isLoading, userDetails])
+  const { userDetails } = useUser()
+  const userAvatar = useLoadAvatar(userDetails?.avatar_url ?? null)
   
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuOpen2, setIsMenuOpen2] = useState(false);

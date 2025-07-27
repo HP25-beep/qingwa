@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import SongItem from "@/components/SongItem";
 import useOnPlay from "@/hooks/useOnPlay";
-import { FileNode, Song } from "@/types";
+import { FileNode } from "@/types";
 
 // interface ExploreContentProps {
 //   songs: FileNode[];
@@ -12,7 +12,7 @@ import { FileNode, Song } from "@/types";
 
 const ExploreContent = () => {
 
-  const [isLoading, setIsLoading] = useState(true)
+  const [_isLoading, setIsLoading] = useState(true)
   const [newAudios, setNewAudios] = useState<FileNode[]>([])
 
   useEffect(() => {

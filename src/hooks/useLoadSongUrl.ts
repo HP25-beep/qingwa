@@ -1,4 +1,4 @@
-import { FileNode, Song } from "@/types";
+import { FileNode } from "@/types";
 import { createClient } from "@/lib/supabase/client";
 
 const useLoadSongUrl = (song: FileNode) => {
