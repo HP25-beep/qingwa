@@ -34,14 +34,6 @@ const FileBlock: React.FC<FileBlockProps> = ({
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  // const handleDelete = async (data: FileNode) => {
-  //   setIsDeleting(true)
-  //   await fetch(`/api/files/${data.id}/${data.path}/${data.type}/delete-recursive`, {
-  //     method: 'DELETE',
-  //   })
-  //   setIsDeleting(false)
-  // }
-
   useEffect(() => {
     setIsEditing(onEditing);
   }, [onEditing]);

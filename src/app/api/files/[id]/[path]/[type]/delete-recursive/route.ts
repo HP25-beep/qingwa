@@ -32,12 +32,13 @@ async function getAllDescendantIds(supabase: SupabaseClient, parentId: number): 
 }
 
 export async function DELETE(
-  req: NextRequest,
-  { params }: { params: { id: string, path: string, type: string } }
+  _req: NextRequest,
+  { params }: { params: Promise<{ id: string, path: string, type: string }> }
 ) {
-  const nodeId = parseInt(params.id)
-  const nodePath = decodeURIComponent(params.path)
-  const nodeType = parseInt(params.type)
+  const { id, path, type } = await params
+  const nodeId = parseInt(id)
+  const nodePath = decodeURIComponent(path)
+  const nodeType = parseInt(type)
 
   const supabase = await createClient()
 

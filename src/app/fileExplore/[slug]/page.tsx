@@ -3,9 +3,9 @@ import getFilesBySlug from '@/lib/db/getFilesBySlug'
 import FileExploreContent from './components/FileExploreContent'
 import Header from '@/components/Header'
 
-export default async function fileExplore({ params }: { params: { slug: string } }) {
-  
-  const sslug = parseInt(params.slug)
+export default async function fileExplore({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const sslug = parseInt(slug)
   if (!sslug) {
     return (
       <div>
@@ -15,15 +15,6 @@ export default async function fileExplore({ params }: { params: { slug: string }
   }
 
   const files = await getFilesBySlug(sslug)
-  // const res = await fetch(`fileExplore/${sslug}/details`)
-  // if (!res.ok) {
-  //   return (
-  //     <div>
-  //       something went wrong
-  //     </div>
-  //   )
-  // } 
-  // const files = await res.json()
 
   if (!files) {
     return (
