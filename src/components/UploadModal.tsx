@@ -12,8 +12,11 @@ import { useUser } from "@/hooks/useUser"
 import { useUserFS } from "@/hooks/useUserFS"
 
 import Modal from "./Modal"
-import Input from "./Input"
-import Button from "./Button"
+// import Input from "./Input"
+// import Button from "./Button"
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Ghost } from "lucide-react";
 
 const UploadModal = () => {
   const router = useRouter()
@@ -154,8 +157,10 @@ const UploadModal = () => {
     >
 
       <div className="flex flex-col space-y-3">
-        <div className="flex flex-row space-x-1.5">
-          <Button
+        <div className="grid grid-cols-2 space-x-1.5">
+          <Button 
+            variant={"link"}
+            className="text-white/90"
             disabled={isLoading}
             onClick={() => { 
               setUploadType(1)
@@ -166,6 +171,8 @@ const UploadModal = () => {
             upload audio
           </Button>
           <Button
+            variant={"link"}
+            className="text-white/90"
             disabled={isLoading}
             onClick={() => { 
               setUploadType(0)
@@ -184,32 +191,36 @@ const UploadModal = () => {
           >
             <Input 
               id="title"
+              className="text-white/90 placeholder:text-neutral-300/80"
               disabled={isLoading}
               {...register('name', { required: true })}
               placeholder="Audio title"
             />
             <Input 
               id="author"
+              className="text-white/90 placeholder:text-neutral-300/80"
               disabled={isLoading}
               {...register('detail', { required: true })}
               placeholder="Audio author"
             />
             <div>
-              <div className="pb-1">
+              <div className="pb-1 text-neutral-300/80">
                 select a song file
               </div>
               <Input
                 id="audio"
+                className="text-white/90 placeholder:text-neutral-300/80"
                 type="file"
                 disabled={isLoading}
                 accept=".mp3, .m4a, .aac"
                 {...register('file', { required: true })}
               />
             </div>
-            <Button 
+            <Button   
+              variant={"ghost"}
               disabled={isLoading} 
               type="submit" 
-              className="text-black h-[40px]"
+              className="text-white/90 h-[40px] hover:bg-secondary/80"
             >
               Create 
             </Button>
@@ -222,16 +233,18 @@ const UploadModal = () => {
           >
             <Input 
               id="name"
+              className="text-white/90 placeholder:text-neutral-300/80"
               disabled={isLoading}
               {...register('name', { required: true })}
               placeholder="Folder name"
             />
             <div>
-              <div className="pb-1">
+              <div className="pb-1 text-neutral-300/80">
                 select a cover image
               </div>
               <Input
                 id="image"
+                className="text-white/90 placeholder:text-neutral-300/80"
                 type="file"
                 disabled={isLoading}
                 accept="image/*"
@@ -239,9 +252,10 @@ const UploadModal = () => {
               />
             </div>
             <Button 
+              variant={"ghost"}
               disabled={isLoading} 
               type="submit" 
-              className="text-black h-[40px]"
+              className="text-white/90 h-[40px] hover:bg-secondary/80"
             >
               Create 
             </Button>
@@ -252,6 +266,6 @@ const UploadModal = () => {
   );
 }
 
-Input.displayName = "Input";
+// Input.displayName = "Input";
 
 export default UploadModal;
