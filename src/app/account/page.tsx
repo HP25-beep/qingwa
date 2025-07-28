@@ -7,7 +7,8 @@ import uniqid from "uniqid";
 
 import { useUser } from "@/hooks/useUser";
 import Box from "@/components/Box";
-import Input from "@/components/Input";
+// import Input from "@/components/Input";
+import { Input } from "@/components/ui/input";
 import Button from "@/components/Button";
 import AccountWrapper from "./components/AccountWrapper";
 import { useRouter } from "next/navigation";
@@ -117,6 +118,7 @@ const Account = () => {
         <Box className="flex flex-col gap-y-2 py-4 px-6 w-[60%] bg-neutral-800/50 hover:bg-neutral-800/70 transition-colors text-md text-white/80 items-center">
           <label className="w-full">Your Name:</label>
           <Input
+            className="placeholder:text-neutral-300/80"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
             placeholder={userDetails?.full_name || "Enter your full name"}
@@ -131,7 +133,7 @@ const Account = () => {
         </Box>
 
         {/* Avatar Box */}
-        <Box className="flex flex-col gap-y-2 py-4 px-6 w-[60%] bg-neutral-800/70 hover:bg-neutral-800/50 transition-colors text-md text-white/80">
+        <Box className="flex flex-col gap-y-2 py-4 px-6 w-[60%] bg-neutral-800/50 hover:bg-neutral-800/70 transition-colors text-md text-white/80">
           <label>Your Avatar:</label>
           {avatarUrl && (
             <img

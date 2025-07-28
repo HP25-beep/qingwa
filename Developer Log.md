@@ -44,3 +44,6 @@ npm install server-only
 
 ## Style beautify
 
+测试 Bilibili的缩略图功能
+
+[![东爱璃歌](https://i1.hdslb.com/bfs/archive/f4a388c4f88acb0347c9307456caf05b08c7bab2.jpg@672w_378h_1c.avif)](https://www.bilibili.com/video/BV1zPtNzAEZ2)
