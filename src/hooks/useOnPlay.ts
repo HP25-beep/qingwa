@@ -14,10 +14,6 @@ const useOnPlay = (songs: FileNode[]) => {
     const router = useRouter()
 
     const onPlay = (id: number) => {
-      if (!user) {
-        return router.replace("/auth/login")
-      }
-
       player.setId(id)
       player.setIds(songs.map((song) => song.id))
     }
